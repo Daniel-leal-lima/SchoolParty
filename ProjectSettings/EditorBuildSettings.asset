@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 0
+    path: Assets/Scenes/Rede.unity
+    guid: 8c1c1e2049fafcf5f8c962f632aff2a6
+  - enabled: 1
+    path: Assets/Scenes/MenuPrincipal.unity
+    guid: 12eca4afabec21893a16efec55594356
+  - enabled: 1
+    path: Assets/Scenes/Lobby.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: "Assets/Scenes/Conjuga\xE7\xE3o.unity"
+    guid: 161228349d911de6bb125653f933a6b5
+  - enabled: 1
+    path: Assets/Scenes/Calculando.unity
+    guid: 72a38c36a36205503bc58eebeb8264c7
+  - enabled: 1
+    path: "Assets/Scenes/Sin\xF4nimos.unity"
+    guid: 843d52b7bb196b5a68318b0a05d46b7a
+  m_configObjects: {}
