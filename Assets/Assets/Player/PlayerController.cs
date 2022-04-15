@@ -5,14 +5,13 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Photon.Realtime;
-
+using System;
 
 public class PlayerController : MonoBehaviourPunCallbacks
 {
     [SerializeField] private int velocidade;
-    Vector2 velInput;
+    Vector2 movimento;
     [SerializeField] private Rigidbody2D rb;
-
     [SerializeField] private bool click;
     [SerializeField] private string proximoJogo;
     [SerializeField] private Text jogoText;
@@ -32,33 +31,48 @@ public class PlayerController : MonoBehaviourPunCallbacks
         }
     }
 
-    // Start is called before the first frame update
     void Start()
     {
-        click = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        rb.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * velocidade * Time.deltaTime;
-        
-        if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0){
-            GetComponent<Animator>().SetBool("Andar", true);
-            
-            if(Input.GetAxisRaw("Horizontal") != 0){
-                transform.localScale = new Vector3(Input.GetAxisRaw("Horizontal"), transform.localScale.y, transform.localScale.z);
-            }
-        }
-        else{
-            GetComponent<Animator>().SetBool("Andar", false);
-        }
 
-        if(click = true && Input.GetKeyDown("space")){
+        if (click = true && Input.GetKeyDown("space")){
             SceneManager.LoadScene(proximoJogo);
         }
     }
 
+    void FixedUpdate()
+    {
+        Movimento();
+    }
+    
+   void Movimento()
+    {
+        movimento.x = Input.GetAxis("Horizontal");
+        movimento.y = Input.GetAxis("Vertical");
+
+        rb.MovePosition(rb.position + movimento * velocidade * Time.fixedDeltaTime);
+
+        if (movimento.x != 0 )
+        {
+            // Rotaciona o personagem na Horizontal
+            if (movimento.x > 0) { transform.localScale = new Vector3(1, 1, 1);}
+            else { transform.localScale = new Vector3(-1, 1, 1); }
+            
+            GetComponent<Animator>().SetBool("Andar", true);
+        }
+        else if (movimento.y != 0)
+        {
+            GetComponent<Animator>().SetBool("Andar", true);
+        }
+        else
+        {
+            GetComponent<Animator>().SetBool("Andar", false);
+        }
+    }
     private void OnCollisionEnter2D(Collision2D other) {
         if(other.gameObject.tag == "Inicializador"){
             proximoJogo = other.gameObject.GetComponent<CarregadorJogo>().nomeJogo;
