@@ -9,6 +9,7 @@ using System;
 
 public class PlayerController : MonoBehaviourPunCallbacks
 {
+    public FixedJoystick joystickController;
     [SerializeField] private int velocidade;
     Vector2 movimento;
     [SerializeField] private Rigidbody2D rb;
@@ -38,10 +39,25 @@ public class PlayerController : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
+        MudaDeCena();
+        
+    }
 
-        if (click = true && Input.GetKeyDown("space")){
+    void MudaDeCena()
+    {
+        /*if (click = true && Input.GetKeyDown("space")){
             SceneManager.LoadScene(proximoJogo);
+        }*/
+
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+            if (click)
+            {
+                SceneManager.LoadScene(proximoJogo);
+            }
         }
+
     }
 
     void FixedUpdate()
@@ -51,8 +67,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
     
    void Movimento()
     {
-        movimento.x = Input.GetAxis("Horizontal");
-        movimento.y = Input.GetAxis("Vertical");
+
+        movimento.x = joystickController.Horizontal;
+        movimento.y = joystickController.Vertical;
 
         rb.MovePosition(rb.position + movimento * velocidade * Time.fixedDeltaTime);
 
